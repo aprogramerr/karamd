@@ -2,24 +2,33 @@ from django.contrib.auth.models import  AbstractUser
 from django.db import models
 
 
-class User(AbstractUser):
-    USER_TYPES = [
-        ('admin', 'Admin'),
-        ('karfarma', 'Karfarma'),
-        ('karjo', 'Karjo'),
-    ]
-    #role = models.CharField(max_length=10, choices=ROLE_CHOICES)
-    user_type = models.CharField(max_length=7, choices=USER_TYPES)
+# class User(AbstractUser):
+#     USER_TYPES = [
+#         ('admin', 'Admin'),
+#         ('karfarma', 'Karfarma'),
+#         ('karjo', 'Karjo'),
+#     ]
+#     #role = models.CharField(max_length=10, choices=ROLE_CHOICES)
+#     user_type = models.CharField(max_length=7, choices=USER_TYPES)
 
-    # شماره موبایل کاربر که منحصر به فرد است و می‌تونیم ازش برای ورود به سیستم هم استفاده کنیم
-    phone_number = models.CharField(max_length=15, unique=True, null=True, blank=True)
+#     # شماره موبایل کاربر که منحصر به فرد است و می‌تونیم ازش برای ورود به سیستم هم استفاده کنیم
+#     phone_number = models.CharField(max_length=15, unique=True, null=True, blank=True)
 
-    # تعریف متد __str__ برای نمایش خوانا‌تر از مدل در Django Admin یا جاهای دیگه
-    def __str__(self):
-        return f"{self.username} ({self.get_user_type_display()})"
+#     # تعریف متد __str__ برای نمایش خوانا‌تر از مدل در Django Admin یا جاهای دیگه
+#     def __str__(self):
+#         return f"{self.username} ({self.get_user_type_display()})"
+
+class admin(AbstractUser):
+    pass
+
+class karfarma(AbstractUser):
+    pass
+
+class karjo(AbstractUser):
+    pass
 
 class OrganizationProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, limit_choices_to={'user_type': 'karfarma'})
+    user = models.OneToOneField(karfarma, on_delete=models.CASCADE, limit_choices_to={'user_type': 'karfarma'})
     karfarma = models.OneToOneField( 'KarfarmaProfile',on_delete=models.CASCADE, related_name='organizationprofile')
     # مشخصات سازمان
     name = models.CharField(max_length=255)
