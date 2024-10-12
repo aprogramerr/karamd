@@ -1,5 +1,8 @@
 from django.contrib.auth.models import  AbstractUser 
 from django.db import models
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 
 # class User(AbstractUser):
@@ -18,18 +21,23 @@ from django.db import models
 #     def __str__(self):
 #         return f"{self.username} ({self.get_user_type_display()})"
 
-class admin(AbstractUser):
-    pass
+# class admin(AbstractUser):
+#     pass
 
-class karfarma(AbstractUser):
-    pass
+class karfarma(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    # ...
 
-class karjo(AbstractUser):
-    pass
+class karjo(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    # ...
 
 class OrganizationProfile(models.Model):
-    user = models.OneToOneField(karfarma, on_delete=models.CASCADE, limit_choices_to={'user_type': 'karfarma'})
-    karfarma = models.OneToOneField( 'KarfarmaProfile',on_delete=models.CASCADE, related_name='organizationprofile')
+    """
+    اطلاعات سازمان که کارفرما وارد میکند
+    """
+    karfarma = models.OneToOneField(karfarma, on_delete=models.CASCADE, limit_choices_to={'user_type': 'karfarma'})
+    # karfarma = models.OneToOneField( 'KarfarmaProfile',on_delete=models.CASCADE, related_name='organizationprofile')
     # مشخصات سازمان
     name = models.CharField(max_length=255)
     phone_number = models.CharField(max_length=15)
