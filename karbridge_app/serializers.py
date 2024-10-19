@@ -1,14 +1,29 @@
 from rest_framework import serializers
-from .models import KarfarmaProfile, JobPosting, Product, KarjoProfile, Resume, Ticket, OrganizationProfile
+from .models import Karfarma, Organization, JobPosting, Job_skill, Benefits_And_Facilities, Product, Karjo, Resume, Educational_Level, Organization_Name
 
-class KarfarmaProfileSerializer(serializers.ModelSerializer):
+class KarfarmaSerializer(serializers.ModelSerializer):
     class Meta:
-        model = KarfarmaProfile
-        fields = '__all__'  # یا می‌توانید فیلدهای خاصی را مشخص کنید
+        model = Karfarma
+        fields = '__all__'
+
+class OrganizationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Organization
+        fields = '__all__'
 
 class JobPostingSerializer(serializers.ModelSerializer):
     class Meta:
         model = JobPosting
+        fields = '__all__'
+
+class JobSkillSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Job_skill
+        fields = '__all__'
+
+class BenefitsAndFacilitiesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Benefits_And_Facilities
         fields = '__all__'
 
 class ProductSerializer(serializers.ModelSerializer):
@@ -16,9 +31,9 @@ class ProductSerializer(serializers.ModelSerializer):
         model = Product
         fields = '__all__'
 
-class KarjoProfileSerializer(serializers.ModelSerializer):
+class KarjoSerializer(serializers.ModelSerializer):
     class Meta:
-        model = KarjoProfile
+        model = Karjo
         fields = '__all__'
 
 class ResumeSerializer(serializers.ModelSerializer):
@@ -26,12 +41,12 @@ class ResumeSerializer(serializers.ModelSerializer):
         model = Resume
         fields = '__all__'
 
-class TicketSerializer(serializers.ModelSerializer):
+class EducationalLevelSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Ticket
+        model = Educational_Level
         fields = '__all__'
 
-class OrganizationProfileSerializer(serializers.ModelSerializer):
+class OrganizationNameSerializer(serializers.ModelSerializer):
     class Meta:
-        model = OrganizationProfile
+        model = Organization_Name
         fields = '__all__'
