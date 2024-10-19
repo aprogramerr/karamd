@@ -1,23 +1,18 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import (
-    KarfarmaProfileViewSet,
-    JobPostingViewSet,
-    ProductViewSet,
-    KarjoProfileViewSet,
-    ResumeViewSet,
-    TicketViewSet,
-    OrganizationProfileViewSet,
-)
+from .views import KarfarmaViewSet, OrganizationViewSet, JobPostingViewSet, JobSkillViewSet, BenefitsAndFacilitiesViewSet, ProductViewSet, KarjoViewSet, ResumeViewSet, EducationalLevelViewSet, OrganizationNameViewSet
 
 router = DefaultRouter()
-router.register(r'karfarma_profiles', KarfarmaProfileViewSet)
-router.register(r'job_postings', JobPostingViewSet)
-router.register(r'products', ProductViewSet)
-router.register(r'karjoprofiles', KarjoProfileViewSet)
-router.register(r'resumes', ResumeViewSet)
-router.register(r'tickets', TicketViewSet)
-router.register(r'organizationprofiles', OrganizationProfileViewSet)
+router.register(r'karfarma', KarfarmaViewSet)
+router.register(r'organization', OrganizationViewSet)
+router.register(r'jobposting', JobPostingViewSet)
+router.register(r'jobskill', JobSkillViewSet)
+router.register(r'benefits', BenefitsAndFacilitiesViewSet)
+router.register(r'product', ProductViewSet)
+router.register(r'karjo', KarjoViewSet)
+router.register(r'resume', ResumeViewSet)
+router.register(r'educationallevel', EducationalLevelViewSet)
+router.register(r'organizationname', OrganizationNameViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
