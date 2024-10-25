@@ -33,8 +33,9 @@ class Organization(models.Model):
         ('201_500', '201 تا 500 نفر'),
     ]
 
+    # نویسنده 
+    auther = models.OneToOneField(Karfarma ,on_delete=models.CASCADE)
 
-    karfarma = models.OneToOneField(Karfarma, on_delete=models.CASCADE)
     # مشخصات سازمان
     name = models.CharField(max_length=255)
     phone_number = models.CharField(max_length=15)
@@ -42,20 +43,14 @@ class Organization(models.Model):
     website_address = models.URLField(blank=True, null=True)
     logo = models.ImageField(upload_to='logos/', blank=True, null=True)
     
-    # توضیحات و موقعیت جغرافیایی
     about = models.TextField(blank=True, null=True)
-    state = models.CharField(max_length=100)  # استان محل سازمان
-
-    # حوزه فعالیت سازمان
     activity_area = models.CharField(max_length=50, choices=ACTIVITY_CHOICES) # حوزه فعالیت
-
-    # تعداد کارمندان و سال تأسیس
+    state = models.CharField(max_length=100) 
+    addres_organization = models.CharField(max_length=200, null=True)
     number_of_employees = models.CharField(max_length=10, choices=STAFF_COUNT_CHOICES)  # تعداد کارمندان
     year_of_establishment = models.IntegerField(blank=True, null=True)  # سال تأسیس
-
-    # تصاویر و ویدیوها
     profile_background_image = models.ImageField(upload_to='backgrounds/', blank=True, null=True)  # تصویر پس‌زمینه پروفایل
-    media = models.FileField(upload_to='media/', blank=True, null=True)  # تصاویر یا ویدیوهای سازمان
+    media = models.ImageField(upload_to='media/', blank=True, null=True)  # تصاویر یا ویدیوهای سازمان
 
     created_at = models.DateTimeField(auto_now_add=True) # زمان ثبت‌نام
     
