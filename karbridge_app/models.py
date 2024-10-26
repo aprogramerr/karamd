@@ -52,8 +52,6 @@ class Organization(models.Model):
     profile_background_image = models.ImageField(upload_to='backgrounds/', blank=True, null=True)  # تصویر پس‌زمینه پروفایل
     media = models.ImageField(upload_to='media/', blank=True, null=True)  # تصاویر یا ویدیوهای سازمان
 
-    created_at = models.DateTimeField(auto_now_add=True) # زمان ثبت‌نام
-    
     def __str__(self):
         return self(all)
 
@@ -70,14 +68,12 @@ class JobPosting(models.Model):
         ('internship', 'کارآموزی'),  # کارآموزی
         ('project_based', 'پروژه ای'),  # پروژه‌ای
     ]
-
     MILITARY_STATUS_CHOICES = [
         ('no_matter', 'مهم نیست'),
         ('completed', 'پایان خدمت'),
         ('student_exemption', 'معافیت تحصیلی'),
         ('permanent_exemption', 'معافیت دائم'),
     ]
-
     SALARY_CHOICES = [
         ('negotiable', 'توافقی'),
         ('minimum_wage', 'حقوق پایه(وزارت کار)'),
@@ -87,7 +83,6 @@ class JobPosting(models.Model):
         ('35_60_million', 'بین 35 تا 60 میلیون تومان'),
         ('above_60_million', 'بالای 60 میلیون تومان'),
     ]
-
     EDUCATION_CHOICES = [
         ('no_matter', 'مهم نیست'),
         ('diploma', 'دیپلم'),
@@ -96,20 +91,32 @@ class JobPosting(models.Model):
         ('master', 'کارشناسی ارشد'),
         ('phd', 'دکترا'),
     ]
-
+    JOB_CATEGORY_CHOICES = [
+    ('digital_marketing','دیجیتال مارکتینگ'), 
+    ('SEO','سئو'), 
+    ('Graphic_Design_Animation','طراحی گرافیک / انیمیشن'), 
+    ('User_Interface_Design','طراحی رابط کاربری'), 
+    ('user_experience','تجربه کاربری')
+    ]
+    WORK_HISTORY_CHOICES =[
+        ('no_mater','مهم نیست'),
+        ('One_to_two','1 تا 2 سال'),
+        ('two_to_four','2 تا 4 سال'),
+        ('four_to_six','4تا 6 سال'),
+        ('more_six','بیشتر از 6 سال')
+    ]
     organization = models.ForeignKey(Organization,on_delete=models.CASCADE, null=True )
 
     title = models.CharField(max_length=255)  # عنوان آگهی شغلی
-    description = models.TextField()  # توضیحات مربوط به شغل
-    location = models.CharField(max_length=255)  # محل کار
-    gender = models.CharField(max_length=10, choices=GENDER_CHOICES)  # جنسیت
-    employment_type= models.CharField(max_length=20 , choices=EMPLOYMENT_TYPE_CHOICES , blank=True)  # نوع استخدام
-    military_service_status = models.CharField(max_length=20, choices=MILITARY_STATUS_CHOICES)  # وضعیت خدمت نظام وظیفه
-    salary = models.CharField(max_length=20, choices=SALARY_CHOICES)  # حقوق
+    job_category = models.CharField(max_length=25, choices=JOB_CATEGORY_CHOICES, blank=True)
+    gender = models.CharField(max_length=25, choices=GENDER_CHOICES)  # جنسیت
+    employment_type= models.CharField(max_length=25 , choices=EMPLOYMENT_TYPE_CHOICES , blank=True)  # نوع استخدام
+    military_service_status = models.CharField(max_length=25, choices=MILITARY_STATUS_CHOICES)  # وضعیت خدمت نظام وظیفه
+    salary = models.CharField(max_length=25, choices=SALARY_CHOICES)  # حقوق
     state = models.CharField(max_length=100)  # استان
     city = models.CharField(max_length=100)  # شهر
-    minimum_educational_qualification = models.CharField(max_length=20, choices=EDUCATION_CHOICES)  # حداقل مدرک تحصیلی
-    #address = models.CharField(max_length=255)  # آدرس
+    minimum_educational_qualification = models.CharField(max_length=25, choices=EDUCATION_CHOICES)  # حداقل مدرک تحصیلی
+    work_history = models.CharField(max_length=25 ,choices=WORK_HISTORY_CHOICES ,blank=True)
     job_skill = models.ManyToManyField('Job_skill', related_name='job_postings')  # مهارت شغلی
     benefits_and_facilities = models.ManyToManyField('Benefits_And_Facilities')  # مزایا و تسهیلات
     posted_date = models.DateField(auto_now_add=True)  # تاریخ انتشار آگهی  
@@ -160,24 +167,26 @@ class Resume(models.Model):
         ('single', 'مجرد'),  # وضعیت مجرد
         ('married', 'متاهل'),  # وضعیت متاهل
     ]
-
     GENDER_CHOICES = [
         ('male', 'مرد'),
         ('female', 'زن'),
     ]
+    MILITARY_STATUS_CHOICES = [
+        ('completed', 'پایان خدمت'),
+        ('student_exemption', 'معافیت تحصیلی'),
+        ('permanent_exemption', 'معافیت دائم'),
+    ]
 
-    #job_title = models.CharField(max_length=255, verbose_name="عنوان شغلی")  # عنوان شغلی
-    about = models.TextField(verbose_name="درباره من")  # توضیح کوتاه درباره خود
-    #experience = models.TextField(verbose_name="تجربه کاری")  # تجربه کاری
-    #projects = models.TextField(verbose_name="پروژه‌ها")  # پروژه‌ها 
     date_of_birth = models.DateField(null=True, blank=True, verbose_name="تاریخ تولد")  # تاریخ تولد
     marital_status = models.CharField(max_length=20, choices=MARITAL_STATUS_CHOICES, verbose_name="وضعیت تاهل")  # وضعیت تاهل
     gender = models.CharField(max_length=10, choices=GENDER_CHOICES)  # جنسیت
+    military_status = models.CharField(max_length=25 ,choices=MILITARY_STATUS_CHOICES ,blank=True)
     city = models.CharField(max_length=100, verbose_name="شهر")  # شهر
     state = models.CharField(max_length=100, verbose_name="استان")  # استان
-    address = models.TextField(verbose_name="آدرس")  # آدرس
+    address = models.TextField(verbose_name="آدرس" ,blank=True)  # آدرس
+    about_me = models.TextField(blank=True)
     educational_level = models.ManyToManyField('Educational_Level')# سطح تحصیلات
-    organization_name = models.ManyToManyField('Organization_Name') #  سازمان
+    organization_name = models.ManyToManyField('Organization_Name') #  سوابق شغلی
     skill = models.ManyToManyField('Job_skill_Resume')  # مهارت
     instagram_address = models.URLField(null=True, blank=True, verbose_name="آدرس اینستاگرام")  # آدرس اینستاگرام
     linkedin_address = models.URLField(null=True, blank=True, verbose_name="آدرس لینکدین")  # آدرس لینکدین
@@ -188,12 +197,12 @@ class Resume(models.Model):
     def __str__(self):
         return f"Resume of {self.full_name}"
 
-    class Job_skill_Resume(models.Model):
-        name = models.CharField(max_length=100)
-        proficiency_level = models.IntegerField(default=0)
+class Job_skill_Resume(models.Model):
+    name = models.CharField(max_length=100)
+    proficiency_level = models.IntegerField(default=0)
 
-        def __str__(self):
-            return self.name
+    def __str__(self):
+        return self.name
     
 class Educational_Level(models.Model):
     educational_level = models.CharField(max_length=100, verbose_name="سطح تحصیلات")  # سطح تحصیلات
@@ -207,6 +216,7 @@ class Educational_Level(models.Model):
         
 class Organization_Name(models.Model):
     organization_name = models.CharField(max_length=255, verbose_name="نام سازمان")  # نام سازمان
+    title = models.CharField(max_length=200 ,null=True)
     job_start_date = models.DateField(null=True, blank=True, verbose_name="تاریخ شروع کار")  # تاریخ شروع کار
     job_end_date = models.DateField(null=True, blank=True, verbose_name="تاریخ پایان کار")  # تاریخ پایان کار
 
