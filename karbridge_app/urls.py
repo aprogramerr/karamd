@@ -16,5 +16,5 @@ router.register(r'educationallevel', EducationalLevelViewSet)
 router.register(r'organizationname', OrganizationNameViewSet)
 
 urlpatterns = [
-    path('', include(router.urls)),
+    path('api/', include(router.urls)),
 ]
