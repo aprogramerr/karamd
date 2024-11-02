@@ -126,7 +126,7 @@ class JobPosting(models.Model):
     
 class Job_skill(models.Model):
     name = models.CharField(max_length=100)
-    proficiency_level = models.IntegerField(default=0)
+    proficiency_level = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return self.name
@@ -144,7 +144,7 @@ class Product(models.Model):
     # اطلاعات محصول
     name = models.CharField(max_length=255)  # نام محصول
     description = models.TextField(blank=True, null=True)  # توضیحات محصول
-    price = models.IntegerField()  # قیمت محصول
+    price = models.PositiveIntegerField()  # قیمت محصول
     image = models.ImageField(upload_to='products/', blank=True, null=True)  # تصویر محصول
 
     # تاریخ‌های مرتبط
