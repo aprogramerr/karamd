@@ -131,6 +131,10 @@ class JobCategory(models.Model):
     def __str__(self):
         return self.name
     
+    class Meta:
+        verbose_name = 'Job Category'
+        verbose_name_plural = 'Job Categories'
+    
     
 class Job_skill(models.Model):
     name = models.CharField(max_length=100)
