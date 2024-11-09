@@ -13,6 +13,7 @@ from .views import (
     KarfarmaViewSet,
     OrganizationViewSet,
     JobPostingViewSet,
+    JobCategoryViewSet,
     JobSkillViewSet,
     BenefitsAndFacilitiesViewSet,
     ProductViewSet,
@@ -28,6 +29,7 @@ router = DefaultRouter()
 router.register(r'karfarma', KarfarmaViewSet)
 router.register(r'organization', OrganizationViewSet)
 router.register(r'job-posting', JobPostingViewSet)
+router.register(r'job-category', JobCategoryViewSet)
 router.register(r'jobskill', JobSkillViewSet)
 router.register(r'benefits', BenefitsAndFacilitiesViewSet)
 router.register(r'product', ProductViewSet)

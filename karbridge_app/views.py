@@ -9,6 +9,7 @@ from .models import (
     Karfarma,
     Organization,
     JobPosting,
+    JobCategory,
     Job_skill,
     Benefits_And_Facilities,
     Product,
@@ -21,6 +22,7 @@ from .serializers import (
     KarfarmaSerializer,
     OrganizationSerializer,
     JobPostingSerializer,
+    JobCategorySerializer,
     JobSkillSerializer,
     BenefitsAndFacilitiesSerializer,
     ProductSerializer,
@@ -47,9 +49,13 @@ class OrganizationViewSet(viewsets.ModelViewSet):
 class JobPostingViewSet(viewsets.ModelViewSet):
     queryset = JobPosting.objects.all()
     serializer_class = JobPostingSerializer
-    filterset_fields = ['job_category', 'state']
+    filterset_fields = ['category', 'state']
     search_fields = ['title', 'organization__name']
 
+
+class JobCategoryViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = JobCategory.objects.all()
+    serializer_class = JobCategorySerializer
 
 class JobSkillViewSet(viewsets.ModelViewSet):
     queryset = Job_skill.objects.all()
