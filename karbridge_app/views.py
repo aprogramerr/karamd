@@ -1,5 +1,5 @@
 from rest_framework import viewsets
-from rest_framework import status , generics, filters
+from rest_framework import status, generics, filters
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from django.contrib.auth.models import User
@@ -29,66 +29,68 @@ from .serializers import (
     EducationalLevelSerializer,
     OrganizationNameSerializer
 )
-from .permissions import IsKarfarma, IsKarjo  
+from .permissions import IsKarfarma, IsKarjo
+
 
 class KarfarmaViewSet(viewsets.ModelViewSet):
     queryset = Karfarma.objects.all()
     serializer_class = KarfarmaSerializer
-    permission_classes = [IsKarfarma]  
+    permission_classes = [IsKarfarma]
 
 
 class OrganizationViewSet(viewsets.ModelViewSet):
     queryset = Organization.objects.all()
     serializer_class = OrganizationSerializer
-    permission_classes = [IsKarfarma]  
+    permission_classes = [IsKarfarma]
 
 
 class JobPostingViewSet(viewsets.ModelViewSet):
     queryset = JobPosting.objects.all()
     serializer_class = JobPostingSerializer
-    permission_classes = [IsKarfarma]  
+    filterset_fields = ['job_category', 'state']
+    search_fields = ['title', 'organization__name']
 
 
 class JobSkillViewSet(viewsets.ModelViewSet):
     queryset = Job_skill.objects.all()
     serializer_class = JobSkillSerializer
-    permission_classes = [IsKarfarma]  
+    permission_classes = [IsKarfarma]
 
 
 class BenefitsAndFacilitiesViewSet(viewsets.ModelViewSet):
     queryset = Benefits_And_Facilities.objects.all()
     serializer_class = BenefitsAndFacilitiesSerializer
-    permission_classes = [IsKarfarma]  
+    permission_classes = [IsKarfarma]
 
 
 class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
-    permission_classes = [IsKarfarma]  
+    permission_classes = [IsKarfarma]
 
 
 class KarjoViewSet(viewsets.ModelViewSet):
     queryset = Karjo.objects.all()
     serializer_class = KarjoSerializer
-    permission_classes = [IsKarjo]  
+    permission_classes = [IsKarjo]
 
 
 class ResumeViewSet(viewsets.ModelViewSet):
     queryset = Resume.objects.all()
     serializer_class = ResumeSerializer
-    permission_classes = [IsKarjo]  
+    permission_classes = [IsKarjo]
 
 
 class EducationalLevelViewSet(viewsets.ModelViewSet):
     queryset = Educational_Level.objects.all()
     serializer_class = EducationalLevelSerializer
-    permission_classes = [IsKarjo]  
+    permission_classes = [IsKarjo]
 
 
 class OrganizationNameViewSet(viewsets.ModelViewSet):
     queryset = Organization_Name.objects.all()
     serializer_class = OrganizationNameSerializer
-    permission_classes = [IsKarjo]  
+    permission_classes = [IsKarjo]
 
 
 @api_view(['POST'])
@@ -97,20 +99,11 @@ def register_user(request):
     password = request.data.get('password')
     email = request.data.get('email')
     if username and password and email:
-        user = User.objects.create_user(username=username, password=password, email=email)
+        user = User.objects.create_user(
+            username=username, password=password, email=email)
         refresh = RefreshToken.for_user(user)
         return Response({
             'refresh': str(refresh),
             'access': str(refresh.access_token),
         }, status=status.HTTP_201_CREATED)
     return Response({'error': 'Invalid data'}, status=status.HTTP_400_BAD_REQUEST)
-class JobPostingSearchView(generics.ListAPIView):
-    queryset = JobPosting.objects.all()
-    serializer_class = JobPostingSerializer
-    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
-    
-    # فیلتر براساس دسته‌بندی شغلی و استان
-    filterset_fields = ['job_category', 'state']
-    
-    # جستجو براساس عنوان آگهی و نام سازمان
-    search_fields = ['title', 'name']
