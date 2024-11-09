@@ -46,11 +46,22 @@ class OrganizationViewSet(viewsets.ModelViewSet):
     permission_classes = [IsKarfarma]
 
 
+from django_filters import FilterSet, AllValuesFilter, DateTimeFilter, NumberFilter 
+from django_filters import rest_framework as aaa
+class JobCategoryFilter(FilterSet):
+    category = aaa.BaseInFilter(field_name='category__id', lookup_expr='in')
+
+    class Meta:
+        model = JobPosting
+        fields = ['category__id']
+
+
 class JobPostingViewSet(viewsets.ModelViewSet):
     queryset = JobPosting.objects.all()
     serializer_class = JobPostingSerializer
     filterset_fields = ['category', 'state']
     search_fields = ['title', 'organization__name']
+    filterset_class = JobCategoryFilter
 
 
 class JobCategoryViewSet(viewsets.ReadOnlyModelViewSet):
