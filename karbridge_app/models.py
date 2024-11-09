@@ -108,7 +108,7 @@ class JobPosting(models.Model):
     organization = models.ForeignKey(Organization,on_delete=models.CASCADE, null=True )
 
     title = models.CharField(max_length=255)  # عنوان آگهی شغلی
-    job_category = models.CharField(max_length=25, choices=JOB_CATEGORY_CHOICES, blank=True)
+    category = models.ForeignKey('JobCategory', on_delete=models.SET_NULL, null=True)
     gender = models.CharField(max_length=25, choices=GENDER_CHOICES)  # جنسیت
     employment_type= models.CharField(max_length=25 , choices=EMPLOYMENT_TYPE_CHOICES , blank=True)  # نوع استخدام
     military_service_status = models.CharField(max_length=25, choices=MILITARY_STATUS_CHOICES)  # وضعیت خدمت نظام وظیفه
@@ -123,6 +123,14 @@ class JobPosting(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class JobCategory(models.Model):
+    name = models.CharField(max_length=70, default='')
+    
+    def __str__(self):
+        return self.name
+    
     
 class Job_skill(models.Model):
     name = models.CharField(max_length=100)
