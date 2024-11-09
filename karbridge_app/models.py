@@ -214,7 +214,7 @@ class Educational_Level(models.Model):
     def __str__(self):
         return self.educational_level
         
-class Organization_Name(models.Model):
+class Organization_Name(models.Model):  # for resume karjo
     organization_name = models.CharField(max_length=255, verbose_name="نام سازمان")  # نام سازمان
     title = models.CharField(max_length=200 ,null=True)
     job_start_date = models.DateField(null=True, blank=True, verbose_name="تاریخ شروع کار")  # تاریخ شروع کار

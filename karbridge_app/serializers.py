@@ -29,6 +29,7 @@ class OrganizationSerializer(serializers.ModelSerializer):
         ]
 
 class JobPostingSerializer(serializers.ModelSerializer):
+    organization = OrganizationSerializer()  # نمایش اطلاعات سازمان داخل آگهی
     class Meta:
         model = JobPosting
         fields = [
