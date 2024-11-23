@@ -3,6 +3,7 @@ from .models import (
     Karfarma,
     Organization,
     JobPosting,
+    JobCategory,
     Job_skill,
     Benefits_And_Facilities,
     Product,
@@ -33,11 +34,16 @@ class JobPostingSerializer(serializers.ModelSerializer):
     class Meta:
         model = JobPosting
         fields = [
-            'organization', 'title', 'job_category', 'gender', 'employment_type',
+            'organization', 'title', 'category', 'gender', 'employment_type',
             'military_service_status', 'salary', 'state', 'city',
             'minimum_educational_qualification', 'work_history', 'job_skill',
             'benefits_and_facilities', 'posted_date'
         ]
+
+class JobCategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = JobCategory
+        fields = ['id', 'name']
 
 class JobSkillSerializer(serializers.ModelSerializer):
     class Meta:
