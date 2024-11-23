@@ -90,7 +90,7 @@ class OrganizationNameViewSet(viewsets.ModelViewSet):
     serializer_class = OrganizationNameSerializer
     permission_classes = [IsKarjo]  
 
-
+######################### TOKEN ##################################
 @api_view(['POST'])
 def register_user(request):
     username = request.data.get('username')
@@ -104,13 +104,3 @@ def register_user(request):
             'access': str(refresh.access_token),
         }, status=status.HTTP_201_CREATED)
     return Response({'error': 'Invalid data'}, status=status.HTTP_400_BAD_REQUEST)
-class JobPostingSearchView(generics.ListAPIView):
-    queryset = JobPosting.objects.all()
-    serializer_class = JobPostingSerializer
-    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
-    
-    # فیلتر براساس دسته‌بندی شغلی و استان
-    filterset_fields = ['job_category', 'state']
-    
-    # جستجو براساس عنوان آگهی و نام سازمان
-    search_fields = ['title', 'name']
