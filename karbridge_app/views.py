@@ -107,7 +107,11 @@ class EducationalLevelViewSet(viewsets.ModelViewSet):
 class OrganizationNameViewSet(viewsets.ModelViewSet):
     queryset = Organization_Name.objects.all()
     serializer_class = OrganizationNameSerializer
+<<<<<<< HEAD
     permission_classes = [IsKarjo]
+=======
+    permission_classes = [IsKarjo]  
+>>>>>>> origin/master
 
 ######################### TOKEN ##################################
 @api_view(['POST'])
