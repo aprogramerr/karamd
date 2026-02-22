@@ -24,5 +24,5 @@ The system was designed specifically for the computer and IT job market, allowin
 
 Development has been discontinued. The project remains available as a portfolio and reference implementation.
 
-##Figma...
+## Figma...
 https://www.figma.com/design/UbIBQ2YcADO5j365JtmY6Y/%DA%A9%D8%A7%D8%B1%D8%A7%D9%85%D8%AF?node-id=1-12925&node-type=canvas&t=DLxSmpChmWnpIamp-0
